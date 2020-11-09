@@ -12,7 +12,10 @@
   },
   "main": "index.js",
   "dependencies": {
+    "@tensorflow-models/posenet": "^2.2.1",
+    "@tensorflow/tfjs": "^2.7.0",
     "core-js": "^3.6.5",
+    "ml5": "^0.6.0",
     "vue": "^3.0.0"
   },
   "devDependencies": {
