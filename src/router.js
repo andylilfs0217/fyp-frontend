@@ -15,7 +15,7 @@ export default new Router({
         {
           name: "Camera",
           path: "camera/camera",
-          component: () => import("@/views/dashboard/camera/Camera")
+          component: () => import("@/views/dashboard/camera/Camera2")
         },
         // Dashboard
         {

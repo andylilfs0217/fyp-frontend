@@ -1,26 +1,32 @@
 <template>
-  <div>
-    <span>
-      <div class="camera">
-        <video
-          ref="webcamRef"
-          autoplay
-          class="feed"
-          id="camera"
-          width="1080"
-          height="720"
-        />
-        <canvas id="canvas" width="1080" height="720"></canvas>
-      </div>
-    </span>
-    <button @click="togglePoseNet">PoseNet is now on: {{ isPosenetOn }}</button>
-    <br />
-    <button @click="toggleCollection">
-      PoseNet is now collecting data: {{ state }}
-    </button>
-    <br />
-    <button @click="saveData">Save data</button>
-  </div>
+  <v-container>
+    <v-row>
+      <v-col md="6" cols="12">
+        <div class="camera">
+          <video
+            ref="webcamRef"
+            autoplay
+            class="feed"
+            id="camera"
+            width="1080"
+            height="720"
+          />
+          <canvas id="canvas" width="1080" height="720"></canvas>
+        </div>
+      </v-col>
+      <v-col md="6" cols="12">
+        <button @click="togglePoseNet">
+          PoseNet is now on: {{ isPosenetOn }}
+        </button>
+        <br />
+        <button @click="toggleCollection">
+          PoseNet is now collecting data: {{ state }}
+        </button>
+        <br />
+        <button @click="saveData">Save data</button>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
