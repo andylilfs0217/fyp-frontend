@@ -4,6 +4,7 @@
       <v-col md="6" cols="12">
         <video ref="video" id="video" width="100%" autoplay />
       </v-col>
+      <v-col md="6" cols="12"> </v-col>
     </v-row>
   </v-container>
 </template>
