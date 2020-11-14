@@ -84,6 +84,7 @@ export default {
         icon: "mdi-camera",
         title: "camera",
         to: "/camera/camera",
+        // children: [{ title: "camera1", to: "11" }],
       },
       {
         icon: "mdi-view-dashboard",
