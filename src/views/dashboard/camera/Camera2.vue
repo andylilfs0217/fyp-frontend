@@ -56,19 +56,21 @@
         </v-row>
         <!-- Model files -->
         <v-row>
-          <v-file-input label="model.json" v-model="model"></v-file-input>
-        </v-row>
-        <v-row>
-          <v-file-input
-            label="model_meta.json"
-            v-model="metadata"
-          ></v-file-input>
-        </v-row>
-        <v-row>
-          <v-file-input
-            label="model.weights.bin"
-            v-model="weights"
-          ></v-file-input>
+          <v-btn rounded color="primary" @click="$refs.uploadModel.click()">
+            Upload model.json
+          </v-btn>
+          <input type="file" ref="uploadModel" v-show="false" />
+          <v-btn rounded color="primary" @click="$refs.uploadMeta.click()">
+            Upload model_meta.json
+          </v-btn>
+          <input type="file" ref="uploadMeta" v-show="false" />
+          <v-btn rounded color="primary" @click="$refs.uploadWeights.click()">
+            Upload model.weights.bin
+          </v-btn>
+          <input type="file" ref="uploadWeights" v-show="false" />
+          <v-btn icon large color="primary" @click="loadModel">
+            <v-icon>mdi-face-recognition</v-icon>
+          </v-btn>
         </v-row>
       </v-col>
     </v-row>
@@ -184,7 +186,9 @@ export default {
 
     // Upload trained model
     loadModel() {
-      console.log(this.model);
+      this.model = this.$refs.uploadModel.files;
+      this.metadata = this.$refs.uploadMeta.files;
+      this.weights = this.$refs.uploadWeights.files;
       let modelInfo = {
         model: this.model,
         metadata: this.metadata,
