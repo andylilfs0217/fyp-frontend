@@ -57,17 +57,9 @@
         <!-- Model files -->
         <v-row>
           <v-btn rounded color="primary" @click="$refs.uploadModel.click()">
-            Upload model.json
+            Upload all 3 model files
           </v-btn>
-          <input type="file" ref="uploadModel" v-show="false" />
-          <v-btn rounded color="primary" @click="$refs.uploadMeta.click()">
-            Upload model_meta.json
-          </v-btn>
-          <input type="file" ref="uploadMeta" v-show="false" />
-          <v-btn rounded color="primary" @click="$refs.uploadWeights.click()">
-            Upload model.weights.bin
-          </v-btn>
-          <input type="file" ref="uploadWeights" v-show="false" />
+          <input type="file" ref="uploadModel" v-show="false" multiple />
           <v-btn icon large color="primary" @click="loadModel">
             <v-icon>mdi-face-recognition</v-icon>
           </v-btn>
@@ -187,14 +179,7 @@ export default {
     // Upload trained model
     loadModel() {
       this.model = this.$refs.uploadModel.files;
-      this.metadata = this.$refs.uploadMeta.files;
-      this.weights = this.$refs.uploadWeights.files;
-      let modelInfo = {
-        model: this.model,
-        metadata: this.metadata,
-        weights: this.weights,
-      };
-      this.brain.load(modelInfo, () => {
+      this.brain.load(this.model, () => {
         console.log("pose classification ready");
         this.classifyPose();
       });
@@ -210,7 +195,6 @@ export default {
         }
       }
       this.brain.classify(inputs, (error, results) => {
-        console.log(results);
         console.log(results[0].label);
         this.classifyPose();
       });
