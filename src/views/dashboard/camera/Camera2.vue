@@ -42,10 +42,6 @@
             v-show="false"
             @change="loadData"
           />
-          <!-- Upload model and train -->
-          <v-btn icon large color="pink" @click="loadModel">
-            <v-icon>mdi-head-snowflake</v-icon>
-          </v-btn>
         </v-row>
         <v-row>
           <!-- Train target -->
@@ -81,6 +77,8 @@ export default {
   data() {
     return {
       video: null,
+      canvas: null,
+      ctx: null,
       poseNet: null,
       pose: null,
       isPosenetOn: false,
@@ -107,6 +105,7 @@ export default {
     this.video = this.$refs.video;
     // Initialize canvas
     this.canvas = this.$refs.canvas;
+    this.ctx = this.canvas.getContext("2d");
     // Initialize Posenet
     this.poseNet = ml5.poseNet(this.video, () => {
       console.log("poseNet ready");
@@ -136,7 +135,20 @@ export default {
           let target = [this.trainTarget];
           this.brain.addData(inputs, target);
         }
+
+        this.drawBody();
       }
+    },
+
+    // Draw the skeleton of the human body
+    drawBody() {
+      // Reset canvas
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+      // Draw pose and skeleton on canvas
+      drawKeypoints(this.pose.keypoints, confidence, this.ctx, 1);
+      // console.log(this.skeleton);
+      drawSkeleton(this.pose.keypoints, confidence, this.ctx, 1);
     },
 
     // Collect data to train the model
@@ -206,6 +218,7 @@ export default {
         this.poseNet.on("pose", this.gotPoses);
       } else {
         this.poseNet.removeListener("pose", this.gotPoses);
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       }
     },
   },
