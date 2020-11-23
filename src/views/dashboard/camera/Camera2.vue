@@ -2,8 +2,8 @@
   <v-container>
     <v-row>
       <v-col md="6" cols="12">
-        <video ref="video" width="100%" />
-        <canvas ref="canvas"></canvas>
+        <video ref="video" id="video" width="320" height="240" />
+        <canvas ref="canvas" id="canvas" width="320" height="240"></canvas>
       </v-col>
       <v-col md="6" cols="12">
         <!-- Toggle posenet button -->
@@ -60,8 +60,31 @@
             <v-icon>mdi-face-recognition</v-icon>
           </v-btn>
         </v-row>
+        <v-row>
+
+        </v-row>
       </v-col>
     </v-row>
+     <v-card>  
+        <v-row style="padding-left:20px">
+          <v-col cols="2">
+            Your posture:
+          </v-col>
+          <v-col>
+             {{trainmodel}}
+          </v-col>
+        </v-row>       
+        
+        <v-row style="padding-left:20px">
+          <v-col cols="2" >
+            Your score:
+          </v-col>
+          <v-col>
+             <v-rating v-model="score" length="10" readonly size="20"></v-rating>
+          </v-col>
+        </v-row>
+     </v-card>
+       
   </v-container>
 </template>
 
@@ -70,7 +93,7 @@ import * as ml5 from "ml5";
 
 import { drawKeypoints, drawSkeleton } from "@/utils/utilities.js";
 
-const confidence = 0.25;
+const confidence = 0.5;
 
 export default {
   name: "camera2",
@@ -88,6 +111,8 @@ export default {
       model: null,
       metadata: null,
       weights: null,
+      trainmodel:null,
+      score:null,
     };
   },
   mounted() {
@@ -207,7 +232,10 @@ export default {
         }
       }
       this.brain.classify(inputs, (error, results) => {
-        console.log(results[0].label);
+      //  console.log(results[0].label);
+      //   console.log(results[0].confidence);
+        this.trainmodel = results[0].label;
+        this.score = results[0].confidence * 100 / 10;
         this.classifyPose();
       });
     },
@@ -236,12 +264,14 @@ export default {
   height: auto;
   position: absolute;
 }
+#video {
+  display: block;
+  margin: 0 auto;
+  position: absolute;
+}
 #canvas {
   display: block;
-  width: 100%;
-  max-width: 1280px;
   margin: 0 auto;
-  height: auto;
   position: absolute;
 }
 </style>
