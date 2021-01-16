@@ -86,6 +86,12 @@ export default {
         to: "/camera/camera",
         // children: [{ title: "camera1", to: "11" }],
       },
+       {
+        icon: "mdi-apps",
+        title: "Program",
+        to: "/program/program_dialog",
+        // children: [{ title: "camera1", to: "11" }],
+      },
       {
         icon: "mdi-view-dashboard",
         title: "dashboard",

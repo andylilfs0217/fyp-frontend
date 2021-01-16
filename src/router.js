@@ -17,6 +17,12 @@ export default new Router({
           path: "camera/camera",
           component: () => import("@/views/dashboard/camera/Camera2")
         },
+        // show different program
+        {
+          name: "Choose your program",
+          path: "program/program_dialog",
+          component: () => import("@/views/dashboard/program/program_dialog")
+        },
         // Dashboard
         {
           name: "Dashboard",
