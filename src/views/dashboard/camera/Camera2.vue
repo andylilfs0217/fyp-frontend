@@ -60,31 +60,28 @@
             <v-icon>mdi-face-recognition</v-icon>
           </v-btn>
         </v-row>
-        <v-row>
-
-        </v-row>
+        <v-row> </v-row>
       </v-col>
     </v-row>
-     <v-card>  
-        <v-row style="padding-left:20px">
-          <v-col cols="2">
-            Your posture:
-          </v-col>
-          <v-col>
-             {{trainmodel}}
-          </v-col>
-        </v-row>       
-        
-        <v-row style="padding-left:20px">
-          <v-col cols="2" >
-            Your score:
-          </v-col>
-          <v-col>
-             <v-rating v-model="score" length="10" readonly size="20"></v-rating>
-          </v-col>
-        </v-row>
-     </v-card>
-       
+    <v-card>
+      <v-row style="padding-left:20px">
+        <v-col cols="2">
+          Your posture:
+        </v-col>
+        <v-col>
+          {{ trainmodel }}
+        </v-col>
+      </v-row>
+
+      <v-row style="padding-left:20px">
+        <v-col cols="2">
+          Your score:
+        </v-col>
+        <v-col>
+          <v-rating v-model="score" length="10" readonly size="20"></v-rating>
+        </v-col>
+      </v-row>
+    </v-card>
   </v-container>
 </template>
 
@@ -111,8 +108,8 @@ export default {
       model: null,
       metadata: null,
       weights: null,
-      trainmodel:null,
-      score:null,
+      trainmodel: null,
+      score: null,
     };
   },
   mounted() {
@@ -132,7 +129,7 @@ export default {
     this.canvas = this.$refs.canvas;
     this.ctx = this.canvas.getContext("2d");
     // Initialize Posenet
-    this.poseNet = ml5.poseNet(this.video, () => {
+    this.poseNet = ml5.poseNet(this.video, "multiple", () => {
       console.log("poseNet ready");
     });
     // Initialize brain
@@ -146,30 +143,31 @@ export default {
   methods: {
     // Being run recursively once the Posenet is on
     gotPoses(poses) {
+      // Reset canvas
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       if (poses && poses.length > 0) {
-        this.pose = poses[0].pose;
-        if (!this.isWaiting) {
-          let inputs = [];
-          for (const i in this.pose.keypoints) {
-            if (this.pose.keypoints.hasOwnProperty(i)) {
-              const xyCoors = this.pose.keypoints[i];
-              inputs.push(xyCoors.position.x);
-              inputs.push(xyCoors.position.y);
+        poses.forEach((poseEle) => {
+          this.pose = poseEle.pose;
+          if (!this.isWaiting) {
+            let inputs = [];
+            for (const i in this.pose.keypoints) {
+              if (this.pose.keypoints.hasOwnProperty(i)) {
+                const xyCoors = this.pose.keypoints[i];
+                inputs.push(xyCoors.position.x);
+                inputs.push(xyCoors.position.y);
+              }
             }
+            let target = [this.trainTarget];
+            this.brain.addData(inputs, target);
           }
-          let target = [this.trainTarget];
-          this.brain.addData(inputs, target);
-        }
 
-        this.drawBody();
+          this.drawBody();
+        });
       }
     },
 
     // Draw the skeleton of the human body
     drawBody() {
-      // Reset canvas
-      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-
       // Draw pose and skeleton on canvas
       drawKeypoints(this.pose.keypoints, confidence, this.ctx, 1);
       // console.log(this.skeleton);
@@ -232,10 +230,10 @@ export default {
         }
       }
       this.brain.classify(inputs, (error, results) => {
-      //  console.log(results[0].label);
-      //   console.log(results[0].confidence);
+        //  console.log(results[0].label);
+        //   console.log(results[0].confidence);
         this.trainmodel = results[0].label;
-        this.score = results[0].confidence * 100 / 10;
+        this.score = (results[0].confidence * 100) / 10;
         this.classifyPose();
       });
     },
