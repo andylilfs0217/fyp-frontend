@@ -67,6 +67,11 @@ export default new Router({
           name: "Upgrade",
           path: "upgrade",
           component: () => import("@/views/dashboard/Upgrade")
+        },
+        {
+          name: "Beginner",
+          path: "program/beginner",
+          component: () => import("@/views/dashboard/program/beginner_program")
         }
       ]
     }

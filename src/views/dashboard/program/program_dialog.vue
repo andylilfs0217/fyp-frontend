@@ -55,10 +55,14 @@
 </template>
 
 <script>
+  import router from '@/router'
+
+
   export default {
     methods:{
         helloworld(){
             console.log("gotootherpage");
+            router.push({ name: "Beginner" });
         }
     }
   }
