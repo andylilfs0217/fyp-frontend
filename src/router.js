@@ -17,6 +17,12 @@ export default new Router({
           path: "camera/camera",
           component: () => import("@/views/dashboard/camera/Camera2")
         },
+        // Import photo for training
+        {
+          name: "Photo",
+          path: "camera/photo",
+          component: () => import("@/views/dashboard/camera/Photo")
+        },
         // show different program
         {
           name: "Choose your program",

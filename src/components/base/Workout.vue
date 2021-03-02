@@ -1,23 +1,25 @@
 <template>
   <div>
-  <v-card>
+    <v-card>
+      <img
+        class="photo"
+        :src="require(`@/views/dashboard/program/assets/${photo}`)"
+      />
 
-    <img class="photo" :src="require(`@/views/dashboard/program/assets/${photo}`)">
-
-    <v-card-title>
-      {{name}}
-      <div class="timmer">
-        <v-icon class="mr-1" small>
+      <v-card-title>
+        {{ name }}
+        <div class="timmer">
+          <v-icon class="mr-1" small>
             mdi-clock-outline
-        </v-icon>
+          </v-icon>
 
-        <span class="caption grey--text font-weight-light">30s</span>
-      </div>
-    </v-card-title>
+          <span class="caption grey--text font-weight-light">30s</span>
+        </div>
+      </v-card-title>
 
-    <!-- <v-divider class="mx-4"></v-divider> -->
-      
-     <!-- <v-card-actions>
+      <!-- <v-divider class="mx-4"></v-divider> -->
+
+      <!-- <v-card-actions>
       <v-btn
         color="orange lighten-2"
         text
@@ -44,26 +46,20 @@
         </v-card-text>
       </div>
     </v-expand-transition> -->
-    
-  </v-card>  
+    </v-card>
   </div>
-  
 </template>
 
 <script>
-
-  export default {
-    name: 'workout',
-    props: ['photo', 'name'],
- 
-
-  }
+export default {
+  name: "workout",
+  props: ["photo", "name"]
+};
 </script>
 
 <style scoped>
-.photo{
-    width: 100%;
-    height: 100%;
+.photo {
+  width: 100%;
+  height: 100%;
 }
-
 </style>

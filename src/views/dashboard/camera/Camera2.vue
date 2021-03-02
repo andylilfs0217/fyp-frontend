@@ -7,11 +7,6 @@
       </v-col>
       <v-col md="6" cols="12">
         <v-row>
-          <!-- Upload training images button -->
-          <v-btn icon large color="pink" @click="uploadImage">
-            <v-icon>mdi-camera</v-icon>
-          </v-btn>
-          <input type="file" ref="uploadImage" v-show="false" />
           <!-- Toggle posenet button -->
           <v-btn
             icon
@@ -150,51 +145,6 @@ export default {
     });
   },
   methods: {
-    // Being run when the user chooses to upload images for training
-    async uploadImage() {
-      // set some options
-      let options = {
-        imageScaleFactor: 1,
-        minConfidence: 0.1
-      };
-
-      this.$refs.uploadImage.click();
-      this.inputImage = await this.$refs.uploadImage.files;
-      console.log(
-        `Start collecting poses for training target ${this.trainTarget} from the image`
-      );
-      // Change PoseNet to use the images
-      this.poseNet = await ml5.poseNet.load();
-      let poses = await this.poseNet.estimateMultiplePoses(
-        this.inputImage,
-        imageScaleFactor,
-        flipHorizontal,
-        outputStride,
-        maxPoseDetections,
-        scoreThreshold,
-        nmsRadius
-      );
-
-      // Put the coordinates into ml5 brain
-      if (poses && poses.length > 0) {
-        poses.forEach((poseEle) => {
-          this.pose = poseEle.pose;
-          let inputs = [];
-          for (const i in this.pose.keypoints) {
-            if (this.pose.keypoints.hasOwnProperty(i)) {
-              const xyCoors = this.pose.keypoints[i];
-              inputs.push(xyCoors.position.x);
-              inputs.push(xyCoors.position.y);
-            }
-          }
-          let target = [this.trainTarget];
-          this.brain.addData(inputs, target);
-        });
-      }
-
-      console.log("Finished collecting");
-    },
-
     // Being run recursively once the Posenet is on
     gotPoses(poses) {
       // Reset canvas
