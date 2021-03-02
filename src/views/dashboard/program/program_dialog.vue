@@ -56,15 +56,24 @@
 
 <script>
   import router from '@/router'
+  import { service } from "@/plugins/request_service";
 
 
   export default {
+    mounted(){
+        this.testing();
+
+    },
     methods:{
         helloworld(){
             console.log("gotootherpage");
             router.push({ name: "Beginner" });
+        },
+        testing(){
+            console.log(service.get("/users/testing"));
         }
-    }
+    },
+   
   }
 </script>
 

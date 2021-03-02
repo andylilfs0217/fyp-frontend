@@ -5,7 +5,6 @@
     tag="section"
     class="grid-content"
   >
-  
     <workout class="grid-workout"
         photo="beginner01.jpeg"
         name="Sit up">
