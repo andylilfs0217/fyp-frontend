@@ -6,7 +6,7 @@
       width="100%"
       :aspect-ratio="4"
     >
-      <v-btn color="primary" elevation="2" fab absolute bottom right>
+      <v-btn class="play_button" color="primary" elevation="2" fab absolute bottom right @click="startWorkout()">
         <v-icon color="white" large>mdi-play</v-icon>
       </v-btn>
     </v-img>
@@ -18,10 +18,23 @@
 </template>
 
 <script>
+import router from '@/router'
+
 export default {
   props: ["banner"],
-  data: () => ({})
+  data: () => ({}),
+  methods:{
+    startWorkout(){
+      console.log("starting");
+      router.push({ name: "start" });
+
+    }
+  }
 };
 </script>
 
-<style></style>
+<style>
+.play_button{
+  margin-bottom: 35px !important;
+}
+</style>
