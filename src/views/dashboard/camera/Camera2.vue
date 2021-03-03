@@ -6,8 +6,8 @@
         <canvas ref="canvas" id="canvas" width="320" height="240"></canvas>
       </v-col>
       <v-col md="6" cols="12">
-        <!-- Toggle posenet button -->
         <v-row>
+          <!-- Toggle posenet button -->
           <v-btn
             icon
             large
@@ -50,12 +50,13 @@
             v-model="trainTarget"
           ></v-text-field>
         </v-row>
-        <!-- Model files -->
         <v-row>
+          <!-- Model files -->
           <v-btn rounded color="primary" @click="$refs.uploadModel.click()">
             Upload all 3 model files
           </v-btn>
           <input type="file" ref="uploadModel" v-show="false" multiple />
+          <!-- Pose detection -->
           <v-btn icon large color="primary" @click="loadModel">
             <v-icon>mdi-face-recognition</v-icon>
           </v-btn>
@@ -65,6 +66,7 @@
     </v-row>
     <v-card>
       <v-row style="padding-left:20px">
+        <!-- Pose display -->
         <v-col cols="2">
           Your posture:
         </v-col>
@@ -74,6 +76,7 @@
       </v-row>
 
       <v-row style="padding-left:20px">
+        <!-- Score display -->
         <v-col cols="2">
           Your score:
         </v-col>
@@ -110,6 +113,7 @@ export default {
       weights: null,
       trainmodel: null,
       score: null,
+      inputImage: null
     };
   },
   mounted() {
@@ -137,7 +141,7 @@ export default {
       inputs: 34,
       outputs: 4,
       task: "classification",
-      debug: true,
+      debug: true
     });
   },
   methods: {
@@ -236,7 +240,7 @@ export default {
         this.score = (results[0].confidence * 100) / 10;
         this.classifyPose();
       });
-    },
+    }
   },
   watch: {
     isPosenetOn() {
@@ -246,8 +250,8 @@ export default {
         this.poseNet.removeListener("pose", this.gotPoses);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

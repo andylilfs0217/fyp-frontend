@@ -17,6 +17,12 @@ export default new Router({
           path: "camera/camera",
           component: () => import("@/views/dashboard/camera/Camera2")
         },
+        // Import photo for training
+        {
+          name: "Photo",
+          path: "camera/photo",
+          component: () => import("@/views/dashboard/camera/Photo")
+        },
         // show different program
         {
           name: "Choose your program",
@@ -68,10 +74,17 @@ export default new Router({
           path: "upgrade",
           component: () => import("@/views/dashboard/Upgrade")
         },
+        // beginner
         {
           name: "Beginner",
           path: "program/beginner",
           component: () => import("@/views/dashboard/program/beginner_program")
+        },
+         // start workout
+         {
+          name: "start",
+          path: "program/beginner/workout",
+          component: () => import("@/views/dashboard/program/start_workout")
         }
       ]
     }

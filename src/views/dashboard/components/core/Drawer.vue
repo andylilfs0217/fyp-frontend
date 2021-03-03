@@ -57,7 +57,7 @@
         :item="{
           title: $t('upgrade'),
           icon: 'mdi-package-up',
-          to: '/upgrade',
+          to: '/upgrade'
         }"
       />
     </template>
@@ -74,8 +74,8 @@ export default {
   props: {
     expandOnHover: {
       type: Boolean,
-      default: false,
-    },
+      default: false
+    }
   },
 
   data: () => ({
@@ -83,51 +83,57 @@ export default {
       {
         icon: "mdi-camera",
         title: "camera",
-        to: "/camera/camera",
+        to: "/camera/camera"
         // children: [{ title: "camera1", to: "11" }],
       },
-       {
+      {
+        icon: "mdi-camera",
+        title: "Photo",
+        to: "/camera/photo"
+        // children: [{ title: "camera1", to: "11" }],
+      },
+      {
         icon: "mdi-apps",
         title: "Program",
-        to: "/program/program_dialog",
+        to: "/program/program_dialog"
         // children: [{ title: "camera1", to: "11" }],
       },
       {
         icon: "mdi-view-dashboard",
         title: "dashboard",
-        to: "/",
+        to: "/"
       },
       {
         icon: "mdi-account",
         title: "user",
-        to: "/pages/user",
+        to: "/pages/user"
       },
       {
         title: "rtables",
         icon: "mdi-clipboard-outline",
-        to: "/tables/regular-tables",
+        to: "/tables/regular-tables"
       },
       {
         title: "typography",
         icon: "mdi-format-font",
-        to: "/components/typography",
+        to: "/components/typography"
       },
       {
         title: "icons",
         icon: "mdi-chart-bubble",
-        to: "/components/icons",
+        to: "/components/icons"
       },
       {
         title: "google",
         icon: "mdi-map-marker",
-        to: "/maps/google-maps",
+        to: "/maps/google-maps"
       },
       {
         title: "notifications",
         icon: "mdi-bell",
-        to: "/components/notifications",
-      },
-    ],
+        to: "/components/notifications"
+      }
+    ]
   }),
 
   computed: {
@@ -138,7 +144,7 @@ export default {
       },
       set(val) {
         this.$store.commit("SET_DRAWER", val);
-      },
+      }
     },
     computedItems() {
       return this.items.map(this.mapItem);
@@ -146,9 +152,9 @@ export default {
     profile() {
       return {
         avatar: true,
-        title: this.$t("avatar"),
+        title: this.$t("avatar")
       };
-    },
+    }
   },
 
   methods: {
@@ -156,10 +162,10 @@ export default {
       return {
         ...item,
         children: item.children ? item.children.map(this.mapItem) : undefined,
-        title: this.$t(item.title),
+        title: this.$t(item.title)
       };
-    },
-  },
+    }
+  }
 };
 </script>
 
