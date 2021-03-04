@@ -28,7 +28,7 @@ export default {
       { id: 2, image: "beginner04.jpeg", name: "Reverse Crunch" },
       { id: 3, image: "beginner05.jpeg", name: "High Plank" },
       { id: 4, image: "beginner06.jpeg", name: "Single-Leg Sit-Up" },
-      { id: 5, image: "beginner07.jpeg", name: "ouble-Leg Toe Touches" }
+      { id: 5, image: "beginner07.jpeg", name: "Double-Leg Toe Touches" }
     ],
     bannerData: {
       name: "Beginner workout",

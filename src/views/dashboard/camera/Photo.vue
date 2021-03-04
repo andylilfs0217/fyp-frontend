@@ -1,21 +1,82 @@
 <template>
   <v-container>
-    <!-- File input -->
-    <v-file-input
-      accept="image/*"
-      label="Image input"
-      v-model="images"
-      multiple
+    <v-row v-if="!isClassifying">
+      <!-- Class name / training target -->
+      <v-col cols="4">
+        <v-text-field
+          v-model="className"
+          label="Training target"
+          clearable
+        ></v-text-field>
+      </v-col>
+      <!-- File input -->
+      <v-col cols="4">
+        <v-file-input
+          accept="image/*"
+          label="Image input"
+          v-model="imageList"
+          multiple
+        >
+          <template v-slot:append>
+            <v-btn
+              @click="onAdd"
+              color="primary"
+              small
+              :disabled="!className || !imageList"
+            >
+              Add
+            </v-btn>
+          </template>
+        </v-file-input>
+      </v-col>
+      <v-col cols="4">
+        <input type="file" multiple ref="imageList" />
+      </v-col>
+      <!-- Display images -->
+      <v-col cols="2" v-for="(image, imageIdx) in imageList" :key="imageIdx">
+        <v-container>
+          <v-img
+            :ref="`image-${imageIdx}`"
+            :src="getImageUrl(image)"
+            aspect-ratio="1"
+          >
+          </v-img>
+        </v-container>
+      </v-col>
+    </v-row>
+    <!-- Display added classes -->
+    <div>
+      Added classes ({{ classList.length }}):
+      <a v-for="className in classList" :key="className" style="color: black">
+        {{ className }},
+      </a>
+    </div>
+    <!-- Train model button -->
+    <v-btn
+      color="primary"
+      @click="trainModel"
+      :disabled="classList.length < 2"
+      v-if="!isClassifying"
     >
-      <template v-slot:append>
-        <v-btn @click="onSubmit" color="primary">Submit</v-btn>
-      </template>
-    </v-file-input>
-    <!-- Display images -->
+      Get models
+    </v-btn>
+    <v-btn color="primary" @click="usePreset" v-if="!isClassifying">
+      Use preset models
+    </v-btn>
+    <v-btn color="primary" @click="test">
+      Test
+    </v-btn>
+    <!-- Classify poses of the webcam -->
     <v-row>
-      <v-col cols="2" v-for="(image, idx) in images" :key="idx">
-        <v-img :ref="`image-${idx}`" :src="getImageUrl(image)" aspect-ratio="1">
-        </v-img>
+      <!-- Camera -->
+      <v-col cols="12" sm="6">
+        <video width="100%" height="100%" id="camera" />
+      </v-col>
+      <v-col cols="12" sm="6">
+        <!-- Pose -->
+        <div>Your pose: {{ classify.class }}</div>
+        <!-- Score -->
+        <div>Your score: {{ classify.score }}</div>
       </v-col>
     </v-row>
   </v-container>
@@ -24,14 +85,23 @@
 <script>
 import * as ml5 from "ml5";
 
-import runningImage from "../../../assets/model/running.jpg";
 import { drawKeypoints, drawSkeleton } from "@/utils/utilities.js";
 
 export default {
   data: () => ({
-    images: null,
-    poseNet: null,
-    poses: []
+    imageList: null, // all image input
+    poseNet: null, // ml5 poseNet
+    cameraPoseNet: null, // ml5 camera poseNet
+    poses: [], // all poses obtained from all images
+    className: null, // the name of the training target
+    classList: [], // a list containing all the class name
+    brain: null, // ml5 brain
+    classify: {
+      // result of classification
+      class: null,
+      score: null
+    },
+    isClassifying: false
   }),
   mounted() {
     // Initialize Posenet
@@ -46,25 +116,146 @@ export default {
       detectionType: "multiple",
       multiplier: 0.75
     };
-    this.poseNet = ml5.poseNet(() => console.log("Model loaded"), options);
+    this.poseNet = ml5.poseNet(() => {}, options);
     this.poseNet.on("pose", this.gotPoses);
+    // Initialze camera Posenet
+    this.cameraPoseNet = ml5.poseNet(
+      document.getElementById("camera"),
+      "multiple",
+      () => {}
+    );
+    this.cameraPoseNet.on("pose", this.gotPosesFromCamera);
+    // Initialize brain
+    this.brain = ml5.neuralNetwork({
+      inputs: 34,
+      outputs: 4,
+      task: "classification",
+      debug: true
+    });
+    // Initialize camera
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((mediaStream) => {
+        this.mediaStream = mediaStream;
+        document.getElementById("camera").srcObject = mediaStream;
+        document.getElementById("camera").play();
+      })
+      .catch((error) => console.error("getUserMedia() error:", error));
   },
   methods: {
-    // Activated on submit
-    async onSubmit() {
-      this.poses = [];
-      for (let idx = 0; idx < this.images.length; idx++) {
+    // Activated on add
+    onAdd() {
+      for (let idx = 0; idx < this.imageList.length; idx++) {
+        // Detect multiple poses on the image
         this.poseNet.multiPose(this.$refs[`image-${idx}`][0].image);
       }
+      this.classList.push(this.className);
     },
     // Compute the image url for display
-    getImageUrl: (image) => URL.createObjectURL(image),
+    getImageUrl(image) {
+      return URL.createObjectURL(image);
+    },
     // Avtivated when detect a pose
     gotPoses(results) {
-      this.poses.push(results);
+      if (results && results.length > 0) {
+        // Add poses to brain
+        results.forEach((pose) => {
+          let inputs = [];
+          pose.pose.keypoints.forEach((coors) => {
+            inputs.push(coors.position.x);
+            inputs.push(coors.position.y);
+          });
+          this.brain.addData(inputs, [this.className]);
+        });
+      }
+    },
+    // Save the trained data as json file
+    trainModel() {
+      // Normalize data
+      this.brain.normalizeData();
+      // Train data
+      const trainingOptions = {
+        epochs: 32
+      };
+      this.brain.train(trainingOptions, () => {
+        console.log("Model trained");
+        // Start classification
+        this.isClassifying = true;
+        this.classifyPoses();
+      });
+    },
+    gotPosesFromCamera(results) {
+      if (results && results.length > 0) {
+        // Add poses to poses
+        for (const i in results) {
+          if (Object.hasOwnProperty.call(results, i)) {
+            const pose = results[i];
+            this.poses = [];
+            for (const j in pose.pose.keypoints) {
+              if (Object.hasOwnProperty.call(pose.pose.keypoints, j)) {
+                const coors = pose.pose.keypoints[j];
+                this.poses.push(coors.position.x);
+                this.poses.push(coors.position.y);
+              }
+            }
+          }
+        }
+      }
+    },
+    // Classify the poses on the camera
+    classifyPoses() {
+      // Get inputs from the camera
+      this.brain.classifyMultiple(this.poses, this.displayResults);
+    },
+    displayResults(error, results) {
+      if (results) {
+        this.classify.class = results[0].label;
+        this.classify.score = results[0].confidence;
+      }
+      this.classifyPoses();
+    },
+    usePreset() {
+      const options = {
+        task: "classification"
+      };
+      this.brain = ml5.neuralNetwork(options);
+      this.isClassifying = true;
+      let fileList = [
+        new File(
+          [JSON.stringify(require("./model/model.json"))],
+          "model.json",
+          {
+            type: "application/json"
+          }
+        ),
+        new File(
+          [JSON.stringify(require("./model/model.json"))],
+          "model.json",
+          {
+            type: "application/json"
+          }
+        )
+        // new File([require("./model/model.weights.bin")], "model.weights.bin", {
+        //   type: "application/octet-stream"
+        // })
+      ];
+      // this.brain.load(fileList, this.classifyPoses);
+    },
+    test() {
+      console.log(this.$refs.imageList.files);
+      let reader = new FileReader();
+      // let temp = reader.readAsArrayBuffer(require("./model/model.weights.bin"));
+      // console.log(temp);
     }
   }
 };
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.canvas {
+  position: absolute;
+  top: 0;
+  z-index: 0;
+  background-color: black;
+}
+</style>
