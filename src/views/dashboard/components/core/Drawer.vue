@@ -93,6 +93,12 @@ export default {
         // children: [{ title: "camera1", to: "11" }],
       },
       {
+        icon: "mdi-camera",
+        title: "Preset",
+        to: "/camera/preset"
+        // children: [{ title: "camera1", to: "11" }],
+      },
+      {
         icon: "mdi-apps",
         title: "Program",
         to: "/program/program_dialog"

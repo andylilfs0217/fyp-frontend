@@ -23,6 +23,12 @@ export default new Router({
           path: "camera/photo",
           component: () => import("@/views/dashboard/camera/Photo")
         },
+        // Use preset model to predict posture
+        {
+          name: "Preset",
+          path: "camera/preset",
+          component: () => import("@/views/dashboard/camera/Preset")
+        },
         // show different program
         {
           name: "Choose your program",
@@ -80,8 +86,8 @@ export default new Router({
           path: "program/beginner",
           component: () => import("@/views/dashboard/program/beginner_program")
         },
-         // start workout
-         {
+        // start workout
+        {
           name: "start",
           path: "program/beginner/workout",
           component: () => import("@/views/dashboard/program/start_workout")

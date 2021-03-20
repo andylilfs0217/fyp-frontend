@@ -10,7 +10,7 @@
         ></v-text-field>
       </v-col>
       <!-- File input -->
-      <v-col cols="4">
+      <v-col cols="8">
         <v-file-input
           accept="image/*"
           label="Image input"
@@ -28,9 +28,6 @@
             </v-btn>
           </template>
         </v-file-input>
-      </v-col>
-      <v-col cols="4">
-        <input type="file" multiple ref="imageList" />
       </v-col>
       <!-- Display images -->
       <v-col cols="2" v-for="(image, imageIdx) in imageList" :key="imageIdx">
@@ -60,12 +57,9 @@
     >
       Get models
     </v-btn>
-    <v-btn color="primary" @click="usePreset" v-if="!isClassifying">
+    <!-- <v-btn color="primary" @click="usePreset" v-if="!isClassifying">
       Use preset models
-    </v-btn>
-    <v-btn color="primary" @click="test">
-      Test
-    </v-btn>
+    </v-btn> -->
     <!-- Classify poses of the webcam -->
     <v-row>
       <!-- Camera -->
@@ -77,6 +71,12 @@
         <div>Your pose: {{ classify.class }}</div>
         <!-- Score -->
         <div>Your score: {{ classify.score }}</div>
+        <v-progress-linear
+          color="red darken-2"
+          height="20"
+          rounded
+          :value="classify.score"
+        ></v-progress-linear>
       </v-col>
     </v-row>
   </v-container>
@@ -84,6 +84,7 @@
 
 <script>
 import * as ml5 from "ml5";
+import * as tmPose from "@teachablemachine/pose";
 
 import { drawKeypoints, drawSkeleton } from "@/utils/utilities.js";
 
@@ -175,7 +176,8 @@ export default {
       this.brain.normalizeData();
       // Train data
       const trainingOptions = {
-        epochs: 32
+        epochs: 200,
+        batchSize: 16
       };
       this.brain.train(trainingOptions, () => {
         console.log("Model trained");
@@ -210,42 +212,9 @@ export default {
     displayResults(error, results) {
       if (results) {
         this.classify.class = results[0].label;
-        this.classify.score = results[0].confidence;
+        this.classify.score = (results[0].confidence * 100).toFixed(2);
       }
       this.classifyPoses();
-    },
-    usePreset() {
-      const options = {
-        task: "classification"
-      };
-      this.brain = ml5.neuralNetwork(options);
-      this.isClassifying = true;
-      let fileList = [
-        new File(
-          [JSON.stringify(require("./model/model.json"))],
-          "model.json",
-          {
-            type: "application/json"
-          }
-        ),
-        new File(
-          [JSON.stringify(require("./model/model.json"))],
-          "model.json",
-          {
-            type: "application/json"
-          }
-        )
-        // new File([require("./model/model.weights.bin")], "model.weights.bin", {
-        //   type: "application/octet-stream"
-        // })
-      ];
-      // this.brain.load(fileList, this.classifyPoses);
-    },
-    test() {
-      console.log(this.$refs.imageList.files);
-      let reader = new FileReader();
-      // let temp = reader.readAsArrayBuffer(require("./model/model.weights.bin"));
-      // console.log(temp);
     }
   }
 };
