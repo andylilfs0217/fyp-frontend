@@ -35,6 +35,11 @@ export default new Router({
           path: "program/program_dialog",
           component: () => import("@/views/dashboard/program/program_dialog")
         },
+        {
+          name: "Details",
+          path: "program/details",
+          component: () => import("@/views/dashboard/program/details")
+        },
         // Dashboard
         {
           name: "Dashboard",

@@ -55,12 +55,12 @@ export default {
     return {
       start: false,
       workoutData: [
-        { id: 0, image: "beginner01.jpeg", name: "Sit up" },
-        { id: 1, image: "beginner02.jpeg", name: "Flutter Kicks" },
-        { id: 2, image: "beginner04.jpeg", name: "Reverse Crunch" },
-        { id: 3, image: "beginner05.jpeg", name: "High Plank" },
-        { id: 4, image: "beginner06.jpeg", name: "Single-Leg Sit-Up" },
-        { id: 5, image: "beginner07.jpeg", name: "Double-Leg Toe Touches" },
+        { id: 0, image: "beginner01.jpeg", name: "Half Foward Bend" },
+        { id: 1, image: "beginner02.jpeg", name: "Bridge Pose" },
+        { id: 2, image: "beginner04.jpeg", name: "Forearm Plank" },
+        { id: 3, image: "beginner05.jpeg", name: "Child Pose" },
+        { id: 4, image: "beginner06.jpeg", name: "Tree Pose (Left)" },
+        { id: 5, image: "beginner07.jpeg", name: "Tree Pose (Right)" },
       ],
       process: 0,
       finish: false,

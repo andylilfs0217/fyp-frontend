@@ -1,7 +1,13 @@
 <template>
   <v-container>
-    <div><canvas id="canvas"></canvas></div>
-    <div id="label-container"></div>
+    <v-row justify="center">
+      <img
+        class="photo"
+        :src="require(`@/views/dashboard/program/assets/beginner01.jpeg`)"
+      />
+      <div><canvas id="canvas"></canvas></div>
+      <div id="label-container"></div>
+    </v-row>
   </v-container>
 </template>
 
@@ -28,7 +34,7 @@ export default {
     this.maxPredictions = this.model.getTotalClasses();
 
     // Convenience function to setup a webcam
-    const size = 200;
+    const size = 400;
     const flip = true; // whether to flip the webcam
     this.webcam = new tmPose.Webcam(size, size, flip); // width, height, flip
     await this.webcam.setup(); // request access to the webcam
@@ -87,4 +93,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.photo {
+  margin: 20px;
+  width: 400px; /* width of container */
+  height: 400px; /* height of container */
+  object-fit: cover;
+}
+</style>
