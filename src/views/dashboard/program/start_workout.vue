@@ -1,23 +1,39 @@
 <template>
   <v-container id="user-profile" fluid tag="section">
-    <v-row justify="center" v-if="!start">
-      You workout will be start in
-    </v-row>
-    <v-row justify="center" v-if="!start">
-      <timmer :time="1" @finish="start_workout"></timmer>
-    </v-row>
+    <div v-if="!start" justify="center">
+      <v-row justify="center" class="display-3">
+        Are you ready? Your workout will be start.
+      </v-row>
 
-    <v-row justify="center" v-if="start && !finish">
-      <eachWorkout
-        :photo="workoutData[process].image"
-        :name="workoutData[process].name"
-        @finished="updateProcess"
-      ></eachWorkout>
-    </v-row>
+      <v-row justify="center">
+        <timmer :time="1" @finish="start_workout"></timmer>
+      </v-row>
+    </div>
 
-    <v-row justify="center" v-if="finish">
-      U have finished the workout!!
-    </v-row>
+    <div v-if="start && !finish">
+      <v-row justify="center">
+        <eachWorkout
+          :photo="workoutData[process].image"
+          :name="workoutData[process].name"
+          @finished="updateProcess"
+        ></eachWorkout>
+      </v-row>
+      <v-row justify="center" class="display-2">
+        <span v-if="process < 5"
+          >Next workout: {{ workoutData[process + 1].name }}</span
+        >
+        <span v-else> You are almost there </span>
+      </v-row>
+    </div>
+    <div v-if="finish" class="display-3">
+      <v-row justify="center">
+        Congratulation! You have finished the workout.
+      </v-row>
+
+      <v-row justify="center">
+        <img :src="require(`@/views/dashboard/program/assets/finish.jpg`)" />
+      </v-row>
+    </div>
   </v-container>
 </template>
 
@@ -32,7 +48,7 @@ Vue.use(CircularCountDownTimer);
 export default {
   components: {
     Timmer,
-    eachWorkout
+    eachWorkout,
   },
 
   data() {
@@ -44,10 +60,10 @@ export default {
         { id: 2, image: "beginner04.jpeg", name: "Reverse Crunch" },
         { id: 3, image: "beginner05.jpeg", name: "High Plank" },
         { id: 4, image: "beginner06.jpeg", name: "Single-Leg Sit-Up" },
-        { id: 5, image: "beginner07.jpeg", name: "Double-Leg Toe Touches" }
+        { id: 5, image: "beginner07.jpeg", name: "Double-Leg Toe Touches" },
       ],
       process: 0,
-      finish: false
+      finish: false,
     };
   },
 
@@ -61,8 +77,8 @@ export default {
       if (this.process > 5) {
         this.finish = true;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
