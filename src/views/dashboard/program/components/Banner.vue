@@ -30,12 +30,15 @@
 import router from "@/router";
 
 export default {
-  props: ["banner", "workout"],
+  props: ["banner", "workout", "URL"],
   data: () => ({}),
   methods: {
     startWorkout() {
-      console.log("Banner:", this.workout);
-      router.push({ name: "start", query: this.workout });
+      console.log("Banner:", this.workout, this.URL);
+      router.push({
+        name: "start",
+        query: { workout: this.workout, URL: this.URL },
+      });
     },
   },
 };

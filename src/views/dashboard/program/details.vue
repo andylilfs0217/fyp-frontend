@@ -1,12 +1,53 @@
 <template>
   <v-container>
+    <v-row justify="center" class="display-3"> {{ $route.query.name }} </v-row>
+    <v-row justify="center">
+      <v-btn color="secondary" default rounded @click="dialog = true">
+        More Details
+      </v-btn>
+    </v-row>
+    <v-row>
+      <v-card class="mx-auto" outlined>
+        <v-dialog v-model="dialog" max-width="500">
+          <v-card class="text-center">
+            <v-card-title>
+              {{ $route.query.name }}
+
+              <v-spacer />
+
+              <v-icon aria-label="Close" @click="dialog = false">
+                mdi-close
+              </v-icon>
+            </v-card-title>
+
+            <v-card-text>
+              {{ $route.query.workoutdetails }}
+            </v-card-text>
+
+            <v-card-actions>
+              <v-spacer />
+
+              <v-btn color="error" text @click="dialog = false">
+                Close
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-card>
+    </v-row>
     <v-row justify="center">
       <img
         class="photo"
-        :src="require(`@/views/dashboard/program/assets/beginner01.jpeg`)"
+        :src="require(`@/views/dashboard/program/assets/${$route.query.photo}`)"
       />
       <div><canvas id="canvas"></canvas></div>
-      <div id="label-container"></div>
+    </v-row>
+    <v-row justify="center">
+      Your Performance:
+    </v-row>
+
+    <v-row justify="center">
+      <v-rating v-model="mark" length="10" readonly size="30"></v-rating>
     </v-row>
   </v-container>
 </template>
@@ -21,9 +62,11 @@ export default {
     ctx: null,
     labelContainer: null,
     maxPredictions: null,
+    mark: null,
+    dialog: false,
   }),
   async mounted() {
-    const URL = "https://teachablemachine.withgoogle.com/models/lqeVHPVg7/";
+    const URL = this.$route.query.URL;
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
 
@@ -46,11 +89,11 @@ export default {
     canvas.width = size;
     canvas.height = size;
     this.ctx = canvas.getContext("2d");
-    this.labelContainer = document.getElementById("label-container");
-    for (let i = 0; i < this.maxPredictions; i++) {
-      // and class labels
-      this.labelContainer.appendChild(document.createElement("div"));
-    }
+    // this.labelContainer = document.getElementById("label-container");
+    // for (let i = 0; i < this.maxPredictions; i++) {
+    //   // and class labels
+    //   this.labelContainer.appendChild(document.createElement("div"));
+    // }
   },
   methods: {
     async loop(timestamp) {
@@ -67,13 +110,18 @@ export default {
       // Prediction 2: run input through teachable machine classification model
       const prediction = await this.model.predict(posenetOutput);
 
-      for (let i = 0; i < this.maxPredictions; i++) {
-        const classPrediction =
-          prediction[i].className +
-          ": " +
-          prediction[i].probability.toFixed(2) * 100;
-        this.labelContainer.childNodes[i].innerHTML = classPrediction;
+      let i;
+      for (i = 0; i < this.maxPredictions; i++) {
+        if (prediction[i].className == this.$route.query.name) {
+          break;
+        }
       }
+
+      this.mark = (prediction[i].probability.toFixed(2) * 100) / 10;
+      const classPrediction =
+        prediction[i].className +
+        ": " +
+        prediction[i].probability.toFixed(2) * 100;
 
       // finally draw the poses
       this.drawPose(pose);

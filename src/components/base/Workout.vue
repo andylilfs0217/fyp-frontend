@@ -26,10 +26,24 @@ import router from "@/router";
 
 export default {
   name: "workout",
-  props: ["photo", "name"],
+  props: ["photo", "name", "URL", "workoutdetails"],
   methods: {
     details() {
-      router.push({ name: "Details" });
+      // console.log(
+      //   "details??????????/",
+      //   this.workoutdetails,
+      //   this.URL,
+      //   this.photo
+      // );
+      router.push({
+        name: "Details",
+        query: {
+          name: this.name,
+          URL: this.URL,
+          photo: this.photo,
+          workoutdetails: this.workoutdetails,
+        },
+      });
     },
   },
 };

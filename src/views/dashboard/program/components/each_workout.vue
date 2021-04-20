@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <timmer :time="5" justify="center" @finish="finished"></timmer>
+      <timmer :time="20" justify="center" @finish="finished"></timmer>
     </v-row>
     <v-row justify="center" class="display-3"> {{ name }} </v-row>
     <v-row justify="center">
@@ -10,7 +10,13 @@
         :src="require(`@/views/dashboard/program/assets/${photo}`)"
       />
       <div><canvas id="canvas"></canvas></div>
-      <div id="label-container"></div>
+    </v-row>
+    <v-row justify="center">
+      Your Performance:
+    </v-row>
+
+    <v-row justify="center">
+      <v-rating v-model="mark" length="10" readonly size="30"></v-rating>
     </v-row>
   </v-container>
 </template>
@@ -24,7 +30,7 @@ export default {
   components: {
     Timmer,
   },
-  props: ["photo", "name"],
+  props: ["photo", "name", "URL"],
 
   data: () => ({
     model: null,
@@ -32,12 +38,13 @@ export default {
     ctx: null,
     labelContainer: null,
     maxPredictions: null,
+    mark: null,
     //
     timmer: 30,
     next: false,
   }),
   async mounted() {
-    const URL = "https://teachablemachine.withgoogle.com/models/lqeVHPVg7/";
+    const URL = this.URL;
     const modelURL = URL + "model.json";
     const metadataURL = URL + "metadata.json";
 
@@ -81,13 +88,21 @@ export default {
       // Prediction 2: run input through teachable machine classification model
       const prediction = await this.model.predict(posenetOutput);
 
-      for (let i = 0; i < this.maxPredictions; i++) {
-        const classPrediction =
-          prediction[i].className +
-          ": " +
-          prediction[i].probability.toFixed(2) * 100;
-        //this.labelContainer.childNodes[i].innerHTML = classPrediction;
+      let i;
+      for (i = 0; i < this.maxPredictions; i++) {
+        if (prediction[i].className == this.name) {
+          break;
+        }
       }
+
+      this.mark = (prediction[i].probability.toFixed(2) * 100) / 10;
+      const classPrediction =
+        prediction[i].className +
+        ": " +
+        prediction[i].probability.toFixed(2) * 100;
+
+      //this.labelContainer.childNodes[i].innerHTML = classPrediction;
+      //console.log(classPrediction);
 
       // finally draw the poses
       this.drawPose(pose);
