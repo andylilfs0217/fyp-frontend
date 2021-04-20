@@ -91,6 +91,18 @@ export default new Router({
           path: "program/beginner",
           component: () => import("@/views/dashboard/program/beginner_program")
         },
+        // intermediate
+        {
+          name: "intermediate",
+          path: "program/intermediate/",
+          component: () => import("@/views/dashboard/program/intermediate_program")
+        },
+        // advanced
+        {
+          name: "advanced",
+          path: "program/advanced",
+          component: () => import("@/views/dashboard/program/advanced_program")
+        },
         // start workout
         {
           name: "start",

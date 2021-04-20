@@ -23,17 +23,17 @@ export default {
   },
   data: () => ({
     workoutData: [
-      { id: 0, image: "beginner01.jpeg", name: "Half Foward Bend" },
-      { id: 1, image: "beginner02.jpeg", name: "Bridge Pose" },
-      { id: 2, image: "beginner04.jpeg", name: "Forearm Plank" },
-      { id: 3, image: "beginner05.jpeg", name: "Child Pose" },
-      { id: 4, image: "beginner06.jpeg", name: "Tree Pose (Left)" },
-      { id: 5, image: "beginner07.jpeg", name: "Tree Pose (Right)" },
+      { id: 0, image: "intermediate01.jpg", name: "High Lunge (Left)" },
+      { id: 1, image: "intermediate02.jpg", name: "High Lunge (Right)" },
+      { id: 2, image: "intermediate03.jpg", name: "Downward facing dog" },
+      { id: 3, image: "intermediate04.jpg", name: "V Sit" },
+      { id: 4, image: "intermediate05.jpg", name: "Side Plank (Left)" },
+      { id: 5, image: "intermediate06.jpg", name: "Side Plank (Right)" },
     ],
     bannerData: {
-      name: "Beginner workout",
-      description: "This is the beginner workout",
-      image: "beginner.jpg",
+      name: "Intermedaite workout",
+      description: "This is the intermedaite workout",
+      image: "intermediate.jpg",
     },
   }),
 };

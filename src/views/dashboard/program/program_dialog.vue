@@ -1,85 +1,76 @@
 <template>
-  <v-container
-    id="user-profile"
-    fluid
-    tag="section"
-  >
+  <v-container id="user-profile" fluid tag="section">
     <v-row justify="center">
-        <v-col
-            cols="12"
-            md="8"
-        >
-            <base-material-card>
-                <template v-slot:heading>
-                    <div class="display-2 font-weight-light">
-                    Beginner
-                    </div>
-                </template>
-                <button @click="helloworld">
-                    <img class="photo" src="./assets/beginner.jpg">
-                </button>
-            </base-material-card>
-        </v-col>
+      <v-col cols="12" md="8">
+        <base-material-card>
+          <template v-slot:heading>
+            <div class="display-2 font-weight-light">
+              Beginner
+            </div>
+          </template>
+          <button @click="helloworld">
+            <img class="photo" src="./assets/beginner.jpg" />
+          </button>
+        </base-material-card>
+      </v-col>
 
+      <v-col cols="12" md="8">
+        <base-material-card>
+          <template v-slot:heading>
+            <div class="display-2 font-weight-light">
+              Intermediate
+            </div>
+          </template>
+          <button @click="intermediate">
+            <img class="photo" src="./assets/intermediate.jpg" />
+          </button>
+        </base-material-card>
+      </v-col>
 
-        <v-col
-            cols="12"
-            md="8"
-        >
-            <base-material-card>
-                <template v-slot:heading>
-                <div class="display-2 font-weight-light">
-                    Intermediate
-                </div>
-                </template>
-                <img class="photo" src="./assets/intermediate.jpg">
-            </base-material-card>
-        </v-col>
-
-        <v-col
-            cols="12"
-            md="8"
-        >
-            <base-material-card>
-                <template v-slot:heading>
-                <div class="display-2 font-weight-light">
-                    Advanced
-                </div>
-                </template>
-                <img class="photo" src="./assets/advanced.jpg">
-            </base-material-card>
-        </v-col>
-      
+      <v-col cols="12" md="8">
+        <base-material-card>
+          <template v-slot:heading>
+            <div class="display-2 font-weight-light">
+              Advanced
+            </div>
+          </template>
+          <button @click="advanced">
+            <img class="photo" src="./assets/advanced.jpg" />
+          </button>
+        </base-material-card>
+      </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-  import router from '@/router'
-  import { service } from "@/plugins/request_service";
+import router from "@/router";
+import { service } from "@/plugins/request_service";
 
-
-  export default {
-    mounted(){
-        this.testing();
-
+export default {
+  mounted() {
+    this.testing();
+  },
+  methods: {
+    helloworld() {
+      console.log("gotootherpage");
+      router.push({ name: "Beginner" });
     },
-    methods:{
-        helloworld(){
-            console.log("gotootherpage");
-            router.push({ name: "Beginner" });
-        },
-        testing(){
-            console.log(service.get("/users/testing"));
-        }
+    intermediate() {
+      router.push({ name: "intermediate" });
     },
-   
-  }
+    advanced() {
+      router.push({ name: "advanced" });
+    },
+    testing() {
+      console.log(service.get("/users/testing"));
+    },
+  },
+};
 </script>
 
-
 <style>
-.photo{
-    width: 100%;
+.photo {
+  width: 100%;
 }
 </style>

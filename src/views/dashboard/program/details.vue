@@ -93,7 +93,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .photo {
   margin: 20px;
   width: 400px; /* width of container */

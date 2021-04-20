@@ -66,10 +66,13 @@ export default {
       finish: false,
     };
   },
-
+  mounted() {
+    this.workoutData = this.$route.query;
+    console.log(this.workoutData);
+  },
   methods: {
     start_workout() {
-      console.log("start");
+      console.log("start:");
       this.start = true;
     },
     updateProcess() {

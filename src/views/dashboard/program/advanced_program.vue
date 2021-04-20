@@ -23,17 +23,17 @@ export default {
   },
   data: () => ({
     workoutData: [
-      { id: 0, image: "beginner01.jpeg", name: "Half Foward Bend" },
-      { id: 1, image: "beginner02.jpeg", name: "Bridge Pose" },
-      { id: 2, image: "beginner04.jpeg", name: "Forearm Plank" },
-      { id: 3, image: "beginner05.jpeg", name: "Child Pose" },
-      { id: 4, image: "beginner06.jpeg", name: "Tree Pose (Left)" },
-      { id: 5, image: "beginner07.jpeg", name: "Tree Pose (Right)" },
+      { id: 0, image: "advanced01.jpg", name: "Squat" },
+      { id: 1, image: "advanced02.jpeg", name: "Garland" },
+      { id: 2, image: "advanced03.jpg", name: "Extended Side Angle (Left)" },
+      { id: 3, image: "advanced04.jpg", name: "Extended Side Angle (Right)" },
+      { id: 4, image: "advanced05.jpg", name: "Cobra Pose" },
+      { id: 5, image: "advanced06.jpg", name: "Camel" },
     ],
     bannerData: {
-      name: "Beginner workout",
-      description: "This is the beginner workout",
-      image: "beginner.jpg",
+      name: "Advanced workout",
+      description: "This is the advanced workout",
+      image: "advanced.jpg",
     },
   }),
 };
