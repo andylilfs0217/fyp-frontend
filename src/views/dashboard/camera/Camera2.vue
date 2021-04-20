@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row>
-      <v-col md="6" cols="12">
+    <v-row height="530">
+      <v-col md="6" cols="12" style="height: 280px;">
         <video ref="video" id="video" width="320" height="240" />
         <canvas ref="canvas" id="canvas" width="320" height="240"></canvas>
       </v-col>
@@ -64,27 +64,22 @@
         <v-row> </v-row>
       </v-col>
     </v-row>
-    <v-card>
-      <v-row style="padding-left:20px">
+    <div v-if="trainmodel">
+      <v-row justify="center" style="padding-left:20px">
         <!-- Pose display -->
-        <v-col cols="2">
-          Your posture:
-        </v-col>
-        <v-col>
-          {{ trainmodel }}
-        </v-col>
+        Your Posture:
+
+        {{ trainmodel }}
       </v-row>
 
-      <v-row style="padding-left:20px">
-        <!-- Score display -->
-        <v-col cols="2">
-          Your score:
-        </v-col>
-        <v-col>
-          <v-rating v-model="score" length="10" readonly size="20"></v-rating>
-        </v-col>
+      <v-row justify="center">
+        Your Performance:
       </v-row>
-    </v-card>
+
+      <v-row justify="center">
+        <v-rating v-model="score" length="10" readonly size="30"></v-rating>
+      </v-row>
+    </div>
   </v-container>
 </template>
 
@@ -113,7 +108,7 @@ export default {
       weights: null,
       trainmodel: null,
       score: null,
-      inputImage: null
+      inputImage: null,
     };
   },
   mounted() {
@@ -141,7 +136,7 @@ export default {
       inputs: 34,
       outputs: 4,
       task: "classification",
-      debug: true
+      debug: true,
     });
   },
   methods: {
@@ -240,7 +235,7 @@ export default {
         this.score = (results[0].confidence * 100) / 10;
         this.classifyPose();
       });
-    }
+    },
   },
   watch: {
     isPosenetOn() {
@@ -250,8 +245,8 @@ export default {
         this.poseNet.removeListener("pose", this.gotPoses);
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

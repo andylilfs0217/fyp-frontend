@@ -74,8 +74,8 @@ export default {
   props: {
     expandOnHover: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
 
   data: () => ({
@@ -83,27 +83,21 @@ export default {
       {
         icon: "mdi-camera",
         title: "camera",
-        to: "/camera/camera"
+        to: "/camera/camera",
         // children: [{ title: "camera1", to: "11" }],
       },
       {
-        icon: "mdi-camera",
+        icon: "mdi-account-box-multiple",
         title: "Photo",
-        to: "/camera/photo"
-        // children: [{ title: "camera1", to: "11" }],
-      },
-      {
-        icon: "mdi-camera",
-        title: "Preset",
-        to: "/camera/preset"
+        to: "/camera/photo",
         // children: [{ title: "camera1", to: "11" }],
       },
       {
         icon: "mdi-apps",
         title: "Program",
-        to: "/program/program_dialog"
+        to: "/program/program_dialog",
         // children: [{ title: "camera1", to: "11" }],
-      }
+      },
       // {
       //   icon: "mdi-view-dashboard",
       //   title: "dashboard",
@@ -139,7 +133,7 @@ export default {
       //   icon: "mdi-bell",
       //   to: "/components/notifications"
       // }
-    ]
+    ],
   }),
 
   computed: {
@@ -150,7 +144,7 @@ export default {
       },
       set(val) {
         this.$store.commit("SET_DRAWER", val);
-      }
+      },
     },
     computedItems() {
       return this.items.map(this.mapItem);
@@ -159,9 +153,9 @@ export default {
       return {
         avatar: false,
         // title: this.$t("avatar")
-        title: "AI Fitness"
+        title: "AI Fitness",
       };
-    }
+    },
   },
 
   methods: {
@@ -169,10 +163,10 @@ export default {
       return {
         ...item,
         children: item.children ? item.children.map(this.mapItem) : undefined,
-        title: this.$t(item.title)
+        title: this.$t(item.title),
       };
-    }
-  }
+    },
+  },
 };
 </script>
 

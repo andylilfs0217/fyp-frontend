@@ -67,16 +67,23 @@
         <video width="100%" height="100%" id="camera" />
       </v-col>
       <v-col cols="12" sm="6">
-        <!-- Pose -->
-        <div>Your pose: {{ classify.class }}</div>
-        <!-- Score -->
-        <div>Your score: {{ classify.score }}</div>
-        <v-progress-linear
-          color="red darken-2"
-          height="20"
-          rounded
-          :value="classify.score"
-        ></v-progress-linear>
+        <!-- Pose display -->
+        <v-row>
+          Your Posture:
+
+          {{ classify.class }}
+        </v-row>
+
+        <v-row> Your Performance: {{ classify.score }} </v-row>
+
+        <v-row justify="center">
+          <v-rating
+            v-model="classify.score"
+            length="10"
+            readonly
+            size="30"
+          ></v-rating>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>
@@ -100,9 +107,9 @@ export default {
     classify: {
       // result of classification
       class: null,
-      score: null
+      score: null,
     },
-    isClassifying: false
+    isClassifying: false,
   }),
   mounted() {
     // Initialize Posenet
@@ -115,7 +122,7 @@ export default {
       scoreThreshold: 0.5,
       nmsRadius: 20,
       detectionType: "multiple",
-      multiplier: 0.75
+      multiplier: 0.75,
     };
     this.poseNet = ml5.poseNet(() => {}, options);
     this.poseNet.on("pose", this.gotPoses);
@@ -131,7 +138,7 @@ export default {
       inputs: 34,
       outputs: 4,
       task: "classification",
-      debug: true
+      debug: true,
     });
     // Initialize camera
     navigator.mediaDevices
@@ -177,7 +184,7 @@ export default {
       // Train data
       const trainingOptions = {
         epochs: 200,
-        batchSize: 16
+        batchSize: 16,
       };
       this.brain.train(trainingOptions, () => {
         console.log("Model trained");
@@ -215,8 +222,8 @@ export default {
         this.classify.score = (results[0].confidence * 100).toFixed(2);
       }
       this.classifyPoses();
-    }
-  }
+    },
+  },
 };
 </script>
 
