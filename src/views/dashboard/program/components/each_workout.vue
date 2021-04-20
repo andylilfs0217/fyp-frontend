@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <timmer :time="5" justify="center" @finish="finished"></timmer>
+      <timmer :time="20" justify="center" @finish="finished"></timmer>
     </v-row>
     <v-row justify="center" class="display-3"> {{ name }} </v-row>
     <v-row justify="center">
