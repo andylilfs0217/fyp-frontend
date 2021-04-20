@@ -6,7 +6,6 @@
         v-for="workout in workoutData"
         :URL="fileURL"
         :key="workout.id"
-        class="grid-workout"
         :photo="workout.image"
         :name="workout.name"
         :workoutdetails="workout.workoutdetails"

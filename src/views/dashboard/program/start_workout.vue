@@ -6,7 +6,7 @@
       </v-row>
 
       <v-row justify="center">
-        <timmer :time="1" @finish="start_workout"></timmer>
+        <timmer :time="5" @finish="start_workout"></timmer>
       </v-row>
     </div>
 
@@ -32,7 +32,9 @@
       </v-row>
 
       <v-row justify="center">
-        <img :src="require(`@/views/dashboard/program/assets/finish.jpg`)" />
+        <button @click="gotodialog()">
+          <img :src="require(`@/views/dashboard/program/assets/finish.jpg`)" />
+        </button>
       </v-row>
     </div>
   </v-container>
@@ -64,6 +66,9 @@ export default {
     console.log(this.workoutData);
   },
   methods: {
+    gotodialog() {
+      router.back(-2);
+    },
     start_workout() {
       console.log("start:", this.$route.query.URL);
       this.start = true;

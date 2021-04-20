@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="workout-card">
     <v-card>
       <button @click="details">
         <img
@@ -50,6 +50,9 @@ export default {
 </script>
 
 <style scoped>
+.workout-card {
+  padding: 10px;
+}
 .photo {
   width: 100%;
   height: 250px;
