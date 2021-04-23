@@ -78,7 +78,7 @@
 
         <v-row justify="center">
           <v-rating
-            v-model="classify.score"
+            v-model="classify.star"
             length="10"
             readonly
             size="30"
@@ -108,6 +108,7 @@ export default {
       // result of classification
       class: null,
       score: null,
+      star: null,
     },
     isClassifying: false,
   }),
@@ -217,9 +218,11 @@ export default {
       this.brain.classifyMultiple(this.poses, this.displayResults);
     },
     displayResults(error, results) {
+      console.log(this.classify.score);
       if (results) {
         this.classify.class = results[0].label;
-        this.classify.score = (results[0].confidence * 100).toFixed(2);
+        this.classify.score = Number((results[0].confidence * 100).toFixed(2));
+        this.classify.star = this.classify.score / 10;
       }
       this.classifyPoses();
     },
