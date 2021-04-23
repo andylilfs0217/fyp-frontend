@@ -1,12 +1,19 @@
 <template>
   <div class="workout-card">
     <v-card>
-      <button @click="details">
+      <!-- <button @click="details">
         <img
           class="photo"
           :src="require(`@/views/dashboard/program/assets/${photo}`)"
         />
-      </button>
+      </button> -->
+      <v-img
+        :aspect-ratio="16 / 9"
+        class="photo"
+        width="100%"
+        :src="require(`@/views/dashboard/program/assets/${photo}`)"
+        @click="details"
+      ></v-img>
       <v-card-title>
         {{ name }}
         <div class="timmer">
@@ -41,11 +48,11 @@ export default {
           name: this.name,
           URL: this.URL,
           photo: this.photo,
-          workoutdetails: this.workoutdetails,
-        },
+          workoutdetails: this.workoutdetails
+        }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -57,5 +64,6 @@ export default {
   width: 100%;
   height: 250px;
   object-fit: cover;
+  cursor: pointer;
 }
 </style>

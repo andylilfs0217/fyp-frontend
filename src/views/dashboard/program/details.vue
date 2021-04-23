@@ -47,7 +47,7 @@
     </v-row>
 
     <v-row justify="center">
-      <v-rating v-model="mark" length="10" readonly size="30"></v-rating>
+      <v-rating v-model="mark" length="10" readonly size="20"></v-rating>
     </v-row>
   </v-container>
 </template>
@@ -63,7 +63,7 @@ export default {
     labelContainer: null,
     maxPredictions: null,
     mark: null,
-    dialog: false,
+    dialog: false
   }),
   async mounted() {
     const URL = this.$route.query.URL;
@@ -136,8 +136,8 @@ export default {
           tmPose.drawSkeleton(pose.keypoints, minPartConfidence, this.ctx);
         }
       }
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -29,7 +29,7 @@
             :aspect-ratio="16 / 9"
             width="100%"
             src="./assets/intermediate.jpg"
-            @click="helloworld"
+            @click="intermediate"
             class="photo"
           ></v-img>
         </base-material-card>
@@ -46,7 +46,7 @@
             :aspect-ratio="16 / 9"
             width="100%"
             src="./assets/advanced.jpg"
-            @click="helloworld"
+            @click="advanced"
             class="photo"
           ></v-img>
         </base-material-card>
