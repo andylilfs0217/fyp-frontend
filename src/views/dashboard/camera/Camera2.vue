@@ -1,9 +1,9 @@
 <template>
   <v-container>
     <v-row height="530">
-      <v-col md="6" cols="12" style="height: 280px;">
-        <video ref="video" id="video" width="320" height="240" />
-        <canvas ref="canvas" id="canvas" width="320" height="240"></canvas>
+      <v-col md="6" cols="15" style="height: 280px;">
+        <video ref="video" id="video" width="560" height="480" />
+        <canvas ref="canvas" id="canvas" width="560" height="480"></canvas>
       </v-col>
       <v-col md="6" cols="12">
         <v-row>
@@ -62,24 +62,24 @@
           </v-btn>
         </v-row>
         <v-row> </v-row>
+        <div v-if="trainmodel">
+          <v-row style="padding-left:20px; padding-top:20px;">
+            <!-- Pose display -->
+            Your Posture:
+
+            {{ trainmodel }}
+          </v-row>
+
+          <v-row style="padding-left:20px">
+            Your Performance:
+          </v-row>
+
+          <v-row>
+            <v-rating v-model="score" length="10" readonly size="30"></v-rating>
+          </v-row>
+        </div>
       </v-col>
     </v-row>
-    <div v-if="trainmodel">
-      <v-row justify="center" style="padding-left:20px">
-        <!-- Pose display -->
-        Your Posture:
-
-        {{ trainmodel }}
-      </v-row>
-
-      <v-row justify="center">
-        Your Performance:
-      </v-row>
-
-      <v-row justify="center">
-        <v-rating v-model="score" length="10" readonly size="30"></v-rating>
-      </v-row>
-    </div>
   </v-container>
 </template>
 
