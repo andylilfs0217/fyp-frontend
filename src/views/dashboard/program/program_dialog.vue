@@ -8,9 +8,13 @@
               Beginner
             </div>
           </template>
-          <button @click="helloworld">
-            <img class="photo" src="./assets/beginner.jpg" />
-          </button>
+          <v-img
+            :aspect-ratio="16 / 9"
+            width="100%"
+            src="./assets/beginner.jpg"
+            @click="helloworld"
+            class="photo"
+          ></v-img>
         </base-material-card>
       </v-col>
 
@@ -21,9 +25,13 @@
               Intermediate
             </div>
           </template>
-          <button @click="intermediate">
-            <img class="photo" src="./assets/intermediate.jpg" />
-          </button>
+          <v-img
+            :aspect-ratio="16 / 9"
+            width="100%"
+            src="./assets/intermediate.jpg"
+            @click="helloworld"
+            class="photo"
+          ></v-img>
         </base-material-card>
       </v-col>
 
@@ -34,9 +42,13 @@
               Advanced
             </div>
           </template>
-          <button @click="advanced">
-            <img class="photo" src="./assets/advanced.jpg" />
-          </button>
+          <v-img
+            :aspect-ratio="16 / 9"
+            width="100%"
+            src="./assets/advanced.jpg"
+            @click="helloworld"
+            class="photo"
+          ></v-img>
         </base-material-card>
       </v-col>
     </v-row>
@@ -49,7 +61,7 @@ import { service } from "@/plugins/request_service";
 
 export default {
   mounted() {
-    this.testing();
+    // this.testing();
   },
   methods: {
     helloworld() {
@@ -61,16 +73,17 @@ export default {
     },
     advanced() {
       router.push({ name: "advanced" });
-    },
-    testing() {
-      console.log(service.get("/users/testing"));
-    },
-  },
+    }
+    // testing() {
+    //   console.log(service.get("/users/testing"));
+    // }
+  }
 };
 </script>
 
 <style>
 .photo {
   width: 100%;
+  cursor: pointer;
 }
 </style>
