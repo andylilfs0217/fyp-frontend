@@ -25,18 +25,18 @@ export default {
   data: () => ({
     workoutData: [
       {
-        id: 0,
-        image: "intermediate01.jpg",
-        name: "High Lunge (Left)",
+        image: "beginner01.jpeg",
+        name: "Half Forward Bend",
         workoutdetails:
-          "From Uttanasana (Standing Forward Bend), bend your knees and, with an inhale, step your left foot back toward the back edge of your mat, with the ball of the foot on the floor. Step back far enough so that your right knee can form a right angle. Lay your torso on your front thigh and lengthen it forward. To soften your right groin, imagine that the thigh is sinking toward the floor under your torso’s weight. Look forward. Simultaneously, firm the left thigh and push it up toward the ceiling, holding the left knee straight. Stretch your left heel toward the floor.",
+          "From Uttanasana (Standing Forward Bend), press your palms or fingertips into the floor (or blocks on the floor) beside your feet. With an inhale, straighten your elbows and arch your torso away from your thighs, finding as much length between your pubic bone and navel as possible. With your palms (or fingertips) push down and back against the floor, and lift the top of your sternum up (away from the floor) and forward. You might bend your knees slightly to help get this movement, which will arch the back. Look forward, but be careful not to compress the back of your neck. Hold the arched-back position for a few breaths. Then, with an exhale, release your torso into full Uttanasana.",
       },
       {
         id: 1,
         image: "intermediate02.jpg",
-        name: "High Lunge (Right)",
+        image: "advanced01.jpg",
+        name: "Squat",
         workoutdetails:
-          "From Uttanasana (Standing Forward Bend), bend your knees and, with an inhale, step your left foot back toward the back edge of your mat, with the ball of the foot on the floor. Step back far enough so that your right knee can form a right angle. Lay your torso on your front thigh and lengthen it forward. To soften your right groin, imagine that the thigh is sinking toward the floor under your torso’s weight. Look forward. Simultaneously, firm the left thigh and push it up toward the ceiling, holding the left knee straight. Stretch your left heel toward the floor.",
+          "Find a foot stance that feels best for you. Pointing your toes slightly outwards helps some, but keeping them parallel is fine, too. If you’re not sure what’s best, start by putting your feet shoulder-width apart and pointed about 15 degrees outwards. Tense your abs like someone is about to punch you.",
       },
       {
         id: 2,
