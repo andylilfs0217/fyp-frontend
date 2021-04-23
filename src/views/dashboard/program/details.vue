@@ -47,7 +47,7 @@
     </v-row>
 
     <v-row justify="center">
-      <v-rating v-model="mark" length="10" readonly size="20"></v-rating>
+      <v-rating v-model="mark" length="10" readonly size="30"></v-rating>
     </v-row>
   </v-container>
 </template>

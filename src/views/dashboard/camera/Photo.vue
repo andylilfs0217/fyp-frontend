@@ -108,9 +108,9 @@ export default {
       // result of classification
       class: null,
       score: null,
-      star: null,
+      star: null
     },
-    isClassifying: false,
+    isClassifying: false
   }),
   mounted() {
     // Initialize Posenet
@@ -123,7 +123,7 @@ export default {
       scoreThreshold: 0.5,
       nmsRadius: 20,
       detectionType: "multiple",
-      multiplier: 0.75,
+      multiplier: 0.75
     };
     this.poseNet = ml5.poseNet(() => {}, options);
     this.poseNet.on("pose", this.gotPoses);
@@ -139,7 +139,7 @@ export default {
       inputs: 34,
       outputs: 4,
       task: "classification",
-      debug: true,
+      debug: true
     });
     // Initialize camera
     navigator.mediaDevices
@@ -185,7 +185,7 @@ export default {
       // Train data
       const trainingOptions = {
         epochs: 200,
-        batchSize: 16,
+        batchSize: 16
       };
       this.brain.train(trainingOptions, () => {
         console.log("Model trained");
@@ -218,15 +218,15 @@ export default {
       this.brain.classifyMultiple(this.poses, this.displayResults);
     },
     displayResults(error, results) {
-      console.log(this.classify.score);
+      // console.log(this.classify.score);
       if (results) {
         this.classify.class = results[0].label;
         this.classify.score = Number((results[0].confidence * 100).toFixed(2));
         this.classify.star = this.classify.score / 10;
       }
       this.classifyPoses();
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -9,6 +9,7 @@ export default new Router({
   routes: [
     {
       path: "/",
+      redirect: "program/program_dialog",
       component: () => import("@/views/dashboard/Index"),
       children: [
         // Camera
@@ -41,11 +42,11 @@ export default new Router({
           component: () => import("@/views/dashboard/program/details")
         },
         // Dashboard
-        {
-          name: "Dashboard",
-          path: "",
-          component: () => import("@/views/dashboard/Dashboard")
-        },
+        // {
+        //   name: "Dashboard",
+        //   path: "",
+        //   component: () => import("@/views/dashboard/Dashboard")
+        // },
         // Pages
         {
           name: "User Profile",
@@ -95,7 +96,8 @@ export default new Router({
         {
           name: "intermediate",
           path: "program/intermediate/",
-          component: () => import("@/views/dashboard/program/intermediate_program")
+          component: () =>
+            import("@/views/dashboard/program/intermediate_program")
         },
         // advanced
         {

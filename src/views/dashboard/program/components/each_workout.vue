@@ -28,7 +28,7 @@ import Timmer from "@/views/dashboard/program/components/timmer.vue";
 
 export default {
   components: {
-    Timmer,
+    Timmer
   },
   props: ["photo", "name", "URL"],
 
@@ -41,7 +41,7 @@ export default {
     mark: null,
     //
     timmer: 30,
-    next: false,
+    next: false
   }),
   async mounted() {
     const URL = this.URL;
@@ -122,8 +122,8 @@ export default {
     finished() {
       console.log("update time");
       this.$emit("finished");
-    },
-  },
+    }
+  }
 };
 </script>
 
